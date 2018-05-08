@@ -18,7 +18,5 @@ module.exports = function(conf){
     }
     dbPath += '/' + conf.mongodb.db;
 
-    mongoose.connect(dbPath, {
-        useMongoClient: true
-    });
+    mongoose.connect(dbPath);
 };
