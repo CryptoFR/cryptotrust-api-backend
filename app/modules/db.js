@@ -17,6 +17,9 @@ module.exports = function(conf){
         }
     }
     dbPath += '/' + conf.mongodb.db;
+    if (conf.mongodb.replSet) {
+        dbPath += "?replicaSet=" + conf.mongodb.replSet;
+    }
 
     mongoose.connect(dbPath);
 };
