@@ -8,12 +8,17 @@
           bodyParser        = require("body-parser"),
 
           api               = require("./app/routes/api"),
+
           conf              = require("./app/modules/conf"),
           dbInit            = require("./app/modules/db"),
+
+          backgroundTasks   = require("./app/modules/daemon"),
 
           app               = express();
 
     dbInit(conf);
+
+    backgroundTasks.launch();
 
     app.use(logger("dev"));
     app.use(bodyParser.json());

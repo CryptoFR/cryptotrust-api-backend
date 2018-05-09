@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-module.exports = function(conf){
+module.exports = (conf) => {
     let dbPath, first = true;
     for (let hostIndex in conf.mongodb.hosts) {
         if (first) {

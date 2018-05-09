@@ -3,26 +3,24 @@
 
     "use strict";
 
-    const mongoose        = require("mongoose");
+    const   mongoose        = require("mongoose"),
 
-    const ReportSchema = new mongoose.Schema({
+            User            = require("./user");
+
+    const ValidatedSchema = new mongoose.Schema({
         domain: {
             type: String,
             required: true
         },
-        email: {
-            type: String,
-            lowercase: true,
-            trim: true,
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please fill a valid email address"]
+        _user           : {
+            type            : mongoose.Schema.ObjectId,
+            index           : true,
+            ref             : "User",
+            required        : true
         },
         date: {
             type: Date,
             default: Date.now,
-            required: true
-        },
-        ip: {
-            type: String,
             required: true
         },
         type: {
@@ -33,10 +31,11 @@
         },
         comment: {
             type: String,
-            required: true
+            required: true,
+            default: ""
         }
     });
 
-    module.exports = mongoose.model("report", ReportSchema);
+    module.exports = mongoose.model("validated", ValidatedSchema);
 
 })();
