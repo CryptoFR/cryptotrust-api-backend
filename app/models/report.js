@@ -29,6 +29,10 @@
             enum: [ 'legit', 'suspicious', 'scam'],
             required: true
         },
+        lang: {
+            type: String,
+            enum: [ 'fr', 'en' ]
+        },
         comment: {
             type: String,
             default: ""
