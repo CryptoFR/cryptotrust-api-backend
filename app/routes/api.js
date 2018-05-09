@@ -39,7 +39,7 @@
 
     router.post("/report", (req, res) => {
         const nRep = new Report(req.body);
-        nRep.data = new Date();
+        nRep.date = new Date();
         nRep.ip = req.headers['x-forwarded-for'] || req.ip;
         nRep.save((err) => { if (err) console.error(err); });
         // Always send ACK :trollface:

@@ -20,6 +20,7 @@
 
     backgroundTasks.launch();
 
+    app.set("views", "./app/views");
     app.set("view engine", "ejs");
     app.use(logger("dev"));
     app.use(bodyParser.json());
