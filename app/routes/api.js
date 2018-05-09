@@ -3,7 +3,8 @@
 
     "use strict";
 
-    const   express = require('express'),
+    const   express = require("express"),
+            parseDomain = require("parse-domain"),
 
             Validated   = require("../models/validated"),
             Report      = require("../models/report"),
@@ -15,11 +16,15 @@
     });
 
     router.get("/status/:domain", (req, res) => {
-        Validated.findOne({ domain: req.params.domain }).then((validatedReport) => {
+        let domainParts = parseDomain(req.params.domain);
+        const domain = `${domainParts.domain}.${domainParts.tld}`;
+
+        Validated.findOne({ domain: domain }).then((validatedReport) => {
             if (validatedReport) {
                 return res.send({
-                    last_update: validatedReport.date,
-                    status: validatedReport.type
+                    domain: validatedReport.domain,
+                    status: validatedReport.type,
+                    last_update: validatedReport.date
                 });
             } else {
                 return res.send({
@@ -34,9 +39,11 @@
 
     router.post("/report", (req, res) => {
         const nRep = new Report(req.body);
-        nRep.save((err, res) => {
-            return res.send(res);
-        });
+        nRep.data = new Date();
+        nRep.ip = req.headers['x-forwarded-for'] || req.ip;
+        nRep.save((err) => { if (err) console.error(err); });
+        // Always send ACK :trollface:
+        return res.send({success: true});
     });
 
     module.exports = router;

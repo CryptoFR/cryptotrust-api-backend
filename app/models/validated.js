@@ -10,6 +10,7 @@
     const ValidatedSchema = new mongoose.Schema({
         domain: {
             type: String,
+            index: { unique: true },
             required: true
         },
         _user           : {
@@ -31,7 +32,6 @@
         },
         comment: {
             type: String,
-            required: true,
             default: ""
         }
     });

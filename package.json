@@ -12,9 +12,12 @@
   "dependencies": {
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",
+    "ejs": "^2.6.1",
     "express": "^4.16.3",
     "mongoose": "^5.0.17",
     "morgan": "^1.9.0",
-    "redis": "^2.8.0"
+    "parse-domain": "^2.0.0",
+    "redis": "^2.8.0",
+    "request": "^2.85.0"
   }
 }
