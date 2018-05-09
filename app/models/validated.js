@@ -4,7 +4,6 @@
     "use strict";
 
     const   mongoose        = require("mongoose"),
-
             User            = require("./user");
 
     const ValidatedSchema = new mongoose.Schema({

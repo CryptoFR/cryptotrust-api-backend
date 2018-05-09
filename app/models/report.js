@@ -3,23 +3,22 @@
 
     "use strict";
 
-    const mongoose        = require("mongoose");
+    const mongoose        = require("mongoose"),
+        User            = require("./user");
 
     const ReportSchema = new mongoose.Schema({
         domain: {
             type: String,
             required: true
         },
-        email: {
-            type: String,
-            lowercase: true,
-            trim: true,
-            match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "Please fill a valid email address"]
+        _user           : {
+            type            : mongoose.Schema.ObjectId,
+            index           : true,
+            ref             : "User"
         },
         date: {
             type: Date,
-            default: Date.now,
-            required: true
+            default: Date.now
         },
         ip: {
             type: String,
@@ -28,12 +27,11 @@
         type: {
             type: String,
             enum: [ 'legit', 'suspicious', 'scam'],
-            required: true,
-            default: 0
+            required: true
         },
         comment: {
             type: String,
-            required: true
+            default: ""
         }
     });
 
