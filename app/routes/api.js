@@ -41,6 +41,8 @@
         const nRep = new Report(req.body);
         nRep.date = new Date();
         nRep.ip = req.headers['x-forwarded-for'] || req.ip;
+        let domainParts = parseDomain(req.body.domain);
+        req.body.domain = `${domainParts.domain}.${domainParts.tld}`;
         nRep.save((err) => { if (err) console.error(err); });
         // Always send ACK :trollface:
         return res.send({success: true});
