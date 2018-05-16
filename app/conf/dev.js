@@ -14,6 +14,7 @@ module.exports = {
     redis: {
         host: "localhost",
         port: 6379,
-        ttl: 260
+        ttl: 260,
+        expiration: 10 // 10sec in DEVMODE
     }
 };

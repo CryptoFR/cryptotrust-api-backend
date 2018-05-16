@@ -43,7 +43,7 @@
 
         // render the error page
         res.status(err.status || 500);
-        res.send("Error");
+        res.send(err.message);
     });
 
     module.exports = app;
