@@ -3,18 +3,16 @@
 
     "use strict";
 
-    const mongoose        = require("mongoose"),
-        User            = require("./user");
+    const mongoose        = require("mongoose");
 
     const ReportSchema = new mongoose.Schema({
         domain: {
             type: String,
             required: true
         },
-        _user           : {
-            type            : mongoose.Schema.ObjectId,
-            index           : true,
-            ref             : "User"
+        uri: {
+            type: String,
+            required: true
         },
         date: {
             type: Date,

@@ -1,18 +1,18 @@
 module.exports = {
-    domain: 'localhost:3000',
-    api_url: 'http://api.domain.loc',
+    domain: "localhost:3000",
+    api_key: "devAPIkey",
     app: {
-        host: '0.0.0.0',
+        host: "0.0.0.0",
         port: 3000
     },
     mongodb: {
         hosts: [
-            { host: 'localhost', port: 27017 }
+            { host: "localhost", port: 27017 }
         ],
-        db: 'tests-db'
+        db: "tests-db"
     },
     redis: {
-        host: 'localhost',
+        host: "localhost",
         port: 6379,
         ttl: 260
     }
