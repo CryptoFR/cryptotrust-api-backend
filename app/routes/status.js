@@ -12,9 +12,12 @@
 
             conf            = require("../modules/conf"),
 
-            redis           = Redis.createClient(),
+            redis           = Redis.createClient(conf.redis.port, conf.redis.host),
             router          = express.Router();
 
+    if (typeof conf.redis.password !== "undefined") {
+        redis.auth(conf.redis.password);
+    }
 
     router.get("/:domain", (req, res) => {
         let domainParts = parseDomain(req.params.domain);
