@@ -8,6 +8,7 @@
             Redis           = require("redis"),
 
             Validated       = require("../models/validated"),
+            Log             = require("../models/log"),
 
             conf            = require("../modules/conf"),
 
@@ -17,7 +18,15 @@
 
     router.get("/:domain", (req, res) => {
         let domainParts = parseDomain(req.params.domain);
+
+        if (typeof domainParts.tld === "undefined") {
+            return res.status(406).send({error: "Invalid domain"});
+        }
+
         const domain = `${domainParts.domain}.${domainParts.tld}`;
+
+        const log = new Log({domain: domain});
+        log.save(); // Let the process end asynchronously in the background
 
         redis.get(domain, (err, reply) => {
 
@@ -40,6 +49,7 @@
                     } else {
                         report = { domain: domain,  status: "unknown" };
                     }
+
                     // Store in redis & send report
                     redis.set(domain, JSON.stringify(report), 'EX', conf.redis.expiration);
                     return res.send(report);

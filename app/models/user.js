@@ -5,6 +5,7 @@
 
     const   mongoose    = require("mongoose"),
             crypto      = require("crypto"),
+            jwt         = require("jsonwebtoken"),
             bcrypt      = require("bcrypt");
 
     const UserSchema = new mongoose.Schema({
@@ -24,6 +25,12 @@
 
     UserSchema.virtual("hash").get(() => {
         return crypto.createHash("md5").update(this.email).digest("hex");
+    });
+
+    UserSchema.virtual("jwt").get(() => {
+        return jwt.sign({ id: this._id }, conf.secret, {
+            expiresIn: 86400 // expires in 24 hours
+        })
     });
 
     UserSchema.methods.setPassword = function (password, cb) {

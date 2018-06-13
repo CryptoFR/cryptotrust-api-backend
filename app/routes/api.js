@@ -21,8 +21,10 @@
         });
     });
 
+    router.use("/users", require("./users"));
     router.use("/reports", require("./reports"));
     router.use("/status", require("./status"));
+    router.use("/stats", require("./stats"));
 
     module.exports = router;
 
