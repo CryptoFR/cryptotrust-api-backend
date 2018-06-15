@@ -38,10 +38,10 @@
                         tDom.save((err) => {
                             if (err) return console.error(err);
 
-                            console.log("Domain ${domain} saved!");
+                            console.log(`Domain ${domain} saved!`);
                         });
                     } else {
-                        console.log("Domain ${domain} already in database.");
+                        console.log(`Domain ${domain} already in database.`);
                     }
                 });
             }

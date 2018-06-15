@@ -14,9 +14,11 @@
 
 
     router.post("/", (req, res) => {
+        for(let i in req.body) {
+            req.body[i] = req.body[i].trim();
+        }
         const nRep = new Report(req.body);
         nRep.date = new Date();
-        nRep.lang = nRep.lang.trim();
         nRep.ip = req.headers['x-forwarded-for'] || req.ip;
         let domainParts = parseDomain(req.body.domain);
         req.body.domain = `${domainParts.domain}.${domainParts.tld}`;
