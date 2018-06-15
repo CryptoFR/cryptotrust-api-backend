@@ -15,8 +15,7 @@
         _user           : {
             type            : mongoose.Schema.ObjectId,
             index           : true,
-            ref             : "User",
-            required        : true
+            ref             : "User"
         },
         date: {
             type: Date,

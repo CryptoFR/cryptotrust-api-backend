@@ -12,13 +12,9 @@
           conf              = require("./app/modules/conf"),
           dbInit            = require("./app/modules/db"),
 
-          backgroundTasks   = require("./app/modules/daemon"),
-
           app               = express();
 
     dbInit(conf);
-
-    backgroundTasks.launch();
 
     app.set("views", "./app/views");
     app.set("view engine", "ejs");
