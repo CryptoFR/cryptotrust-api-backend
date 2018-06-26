@@ -11,10 +11,6 @@
             router      = express.Router();
 
 
-    router.get("/", (req, res) => {
-        res.send("<form method='post' action='/account/register'><input type='text' name='email'><input type='password' name='password'/><button type='submit'>OK</button></form>")
-    });
-
     // Register
     router.post("/login", (req, res) => {
         User.findOne({

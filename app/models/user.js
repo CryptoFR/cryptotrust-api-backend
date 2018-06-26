@@ -43,7 +43,7 @@
         });
     };
 
-    UserSchema.methods.validPassword = (password, cb) => {
+    UserSchema.methods.validPassword = function (password, cb) {
         bcrypt.compare(password, this.passwordHash, (err, res) => {
             return (cb && typeof cb === "function") ? cb(res) : res;
         });
