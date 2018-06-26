@@ -8,7 +8,7 @@ module.exports = (conf) => {
         if (first) {
             first = false;
             if (typeof conf.mongodb.auth != 'undefined') {
-                dbPath = 'mongodb://' + conf.mongodb.auth.username + ':' + conf.mongodb.auth.password + '@' + conf.mongodb.hosts[hostIndex].host + ':' + conf.mongodb.hosts[hostIndex].port;
+                dbPath = 'mongodb://' + encodeURIComponent(conf.mongodb.auth.username) + ':' + encodeURIComponent(conf.mongodb.auth.password) + '@' + conf.mongodb.hosts[hostIndex].host + ':' + conf.mongodb.hosts[hostIndex].port;
             } else {
                 dbPath = 'mongodb://' + conf.mongodb.hosts[hostIndex].host + ':' + conf.mongodb.hosts[hostIndex].port;
             }
@@ -18,7 +18,7 @@ module.exports = (conf) => {
     }
     dbPath += '/' + conf.mongodb.db;
     if (conf.mongodb.replSet) {
-        dbPath += "?replicaSet=" + conf.mongodb.replSet;
+        dbPath += "?replicaSet=" + encodeURIComponent(conf.mongodb.replSet);
     }
 
     mongoose.connect(dbPath);

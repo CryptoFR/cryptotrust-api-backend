@@ -3,12 +3,13 @@
 
     "use strict";
 
-    const   express = require("express"),
+    const   express     = require("express"),
             parseDomain = require("parse-domain"),
 
-            Report      = require("../models/report"),
+            Report      = require("../../models/report"),
 
-            conf        = require("../modules/conf"),
+            conf        = require("../../modules/conf"),
+            auth        = require("../../modules/auth"),
 
             router = express.Router();
 
@@ -27,10 +28,7 @@
         return res.send({success: true});
     });
 
-    router.get("/", (req, res) => {
-        if (!req.query.api_key || req.query.api_key !== conf.api_key) {
-            return res.status(401).send({ error: "Unauthorized." });
-        }
+    router.get("/", auth.needAdmin, (req, res) => {
 
         Report.aggregate([
                 {$group: {_id: {domain: "$domain", type: "$type", ip: "$ip"}, count: {$sum: 1}}},
@@ -54,6 +52,7 @@
         });
 
     });
+
     module.exports = router;
 
 })();

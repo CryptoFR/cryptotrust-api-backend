@@ -7,10 +7,10 @@
             parseDomain     = require("parse-domain"),
             Redis           = require("redis"),
 
-            Validated       = require("../models/validated"),
-            Log             = require("../models/log"),
+            Validated       = require("../../models/validated"),
+            Log             = require("../../models/log"),
 
-            conf            = require("../modules/conf"),
+            conf            = require("../../modules/conf"),
 
             redis           = Redis.createClient(conf.redis.port, conf.redis.host),
             router          = express.Router();

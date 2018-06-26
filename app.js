@@ -11,16 +11,21 @@
 
           conf              = require("./app/modules/conf"),
           dbInit            = require("./app/modules/db"),
+          auth              = require("./app/modules/auth"),
 
           app               = express();
+
 
     dbInit(conf);
 
     app.set("views", "./app/views");
     app.set("view engine", "ejs");
-    app.use(logger("dev"));
+    app.use(logger(conf.env === "prod" ? "combined" : "dev"));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
+
+    // Support JWT Authentication
+    app.use(auth.middleware);
 
     app.use("/", api);
 
@@ -28,11 +33,11 @@
     app.use((req, res, next) => {
         const err = new Error("Not Found");
         err.status = 404;
-        next(err);
+        return next(err);
     });
 
     // error handler
-    app.use((err, req, res, next) => {
+    app.use((err, req, res) => {
         // set locals, only providing error in development
         res.locals.message = err.message;
         res.locals.error = req.app.get("env") === "development" ? err : {};

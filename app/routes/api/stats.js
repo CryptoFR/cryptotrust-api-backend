@@ -6,9 +6,9 @@
     const   express         = require("express"),
             async           = require("async"),
 
-            Validated       = require("../models/validated"),
-            Report          = require("../models/report"),
-            Log             = require("../models/log"),
+            Validated       = require("../../models/validated"),
+            Report          = require("../../models/report"),
+            Log             = require("../../models/log"),
 
             router          = express.Router();
 

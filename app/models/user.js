@@ -8,6 +8,8 @@
             jwt         = require("jsonwebtoken"),
             bcrypt      = require("bcrypt");
 
+    const   conf        = require("../modules/conf");
+
     const UserSchema = new mongoose.Schema({
         email: {
             type: String,
@@ -20,29 +22,30 @@
         passwordHash: {
             type: String,
             required: true
-        }
+        },
+        flags: [ String ]
     });
 
-    UserSchema.virtual("hash").get(() => {
+    UserSchema.virtual("hash").get(function () {
         return crypto.createHash("md5").update(this.email).digest("hex");
     });
 
-    UserSchema.virtual("jwt").get(() => {
-        return jwt.sign({ id: this._id }, conf.secret, {
-            expiresIn: 86400 // expires in 24 hours
-        })
+    UserSchema.virtual("jwt").get(function () {
+        return jwt.sign({ email: this.email, id: this._id }, conf.jwt.secret, {
+            expiresIn: conf.jwt.expiration
+        });
     });
 
     UserSchema.methods.setPassword = function (password, cb) {
-        bcrypt.hash(password, 10, (err, hash) => { // 10 = Salt Rounds
+        return bcrypt.hash(password, 10, (err, hash) => { // 10 = Salt Rounds
             this.passwordHash = hash;
-            return cb();
+            return (cb && typeof cb === "function") ? cb() : true;
         });
     };
 
-    UserSchema.methods.validPassword = function (password, cb) {
-        bcrypt.compare(password, this.passwordHash, function(err, res) {
-            return cb(res);
+    UserSchema.methods.validPassword = (password, cb) => {
+        bcrypt.compare(password, this.passwordHash, (err, res) => {
+            return (cb && typeof cb === "function") ? cb(res) : res;
         });
     };
 

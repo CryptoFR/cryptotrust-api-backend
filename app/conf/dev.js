@@ -19,5 +19,9 @@ module.exports = {
         port: 6379,
         ttl: 260,
         expiration: 10 // 10sec in Dev Mode
+    },
+    jwt: {
+        secret: "Th1si5myJWTS3cr3t#",
+        expiration: 10000
     }
 };
