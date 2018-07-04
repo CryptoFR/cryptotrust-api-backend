@@ -16,7 +16,7 @@
         User.findOne({
             email: req.body.login
         }, (err, user) => {
-            if (err) throw err;
+            if (err) { console.error(err); return res.status(500).json({ message: "Error" }); }
             if (!user) { return res.status(401).json({ message: "Authentication failed." }); }
 
             user.validPassword(req.body.password, (isValid) => {
