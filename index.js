@@ -88,3 +88,7 @@ function onListening() {
         : 'port ' + addr.port;
     console.log('Cryptotrust API listening on ' + bind);
 }
+
+process.on('uncaughtException', (err) => {
+    console.error('Caught exception: ' + err);
+});

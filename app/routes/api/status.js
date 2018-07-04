@@ -22,7 +22,7 @@
     router.get("/:domain", (req, res) => {
         let domainParts = parseDomain(req.params.domain);
 
-        if (typeof domainParts.tld === "undefined") {
+        if (domainParts === null || typeof domainParts.tld === "undefined") {
             return res.status(406).send({error: "Invalid domain"});
         }
 
