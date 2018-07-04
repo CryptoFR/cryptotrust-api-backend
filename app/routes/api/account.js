@@ -30,14 +30,27 @@
         if (typeof req.body.email === "undefined" || typeof req.body.password === "undefined") {
             return res.status(400).send("Bad request format");
         }
-        const u = new User({email: req.body.email});
-        return u.setPassword(req.body.password, () => {
-            return u.save((err) => {
-                if (err) return res.status(500).send(err.message);
+        User.findOne({email: req.body.email}, (err, user) => {
+            if (err) {
+                return res.status(500).send(err.message);
+            }
 
-                return res.json({auth: true, token: u.jwt});
+            if (user) {
+                return res.status(409).send("User already registered!");
+            }
+
+            const u = new User({email: req.body.email});
+            return u.setPassword(req.body.password, () => {
+                return u.save((err) => {
+                    if (err) {
+                        return res.status(500).send(err.message);
+                    }
+
+                    return res.json({auth: true, token: u.jwt});
+                });
             });
         });
+
     });
 
     router.get("/", (req, res) => {
