@@ -22,9 +22,19 @@
         return res.send({
             title: "CryptoTrust API by CryptoFR",
             synopsis: "Scam detection platform for the crypto world.",
-            usage: {
-                title: "Check if domain.com is legit",
-                _link: `https://${conf.domain}/status/domain.com`
+            endpoints: {
+                check: {
+                    title: "Check the status of domain.com",
+                    _link: `https://${conf.domain}/status/domain.com`
+                },
+                lists: {
+                    title: "Get plain text lists of reported domains",
+                    _link: `https://${conf.domain}/lists/`
+                },
+                stats: {
+                    title: "API's statistics",
+                    _link: `https://${conf.domain}/stats/`
+                }
             },
             hello: req.headers['x-forwarded-for'] || req.ip
         });

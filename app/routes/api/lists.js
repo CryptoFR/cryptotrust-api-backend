@@ -5,10 +5,19 @@
 
     const   express     = require("express"),
 
-            Validated       = require("../../models/validated"),
+            conf        = require("../../modules/conf"),
+            Validated   = require("../../models/validated"),
 
             router = express.Router();
 
+
+    router.get("/", (req, res) => {
+        const v = new Validated();
+
+        return res.json(v.possibleTypes.map(vType => {
+            return { "title": vType, "_link": `https://${conf.domain}/lists/${vType}`}
+        }));
+    });
 
     router.get("/:type", (req, res) => {
 
@@ -18,7 +27,7 @@
             return res.status(400).send("Bad request");
         }
 
-        Validated.find({ type: req.params.type }).then(validHosts => {
+        return Validated.find({ type: req.params.type }).then(validHosts => {
             res.header({"Content-Type": "text/plain"});
             return res.send(validHosts.map(validHost => validHost.domain).join("\n"));
         });
