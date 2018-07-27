@@ -34,6 +34,7 @@
     router.use("/reports", require("./api/reports"));
     router.use("/status", require("./api/status"));
     router.use("/stats", require("./api/stats"));
+    router.use("/lists", require("./api/lists"));
 
     router.use("/account", require("./api/account"));
 

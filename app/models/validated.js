@@ -4,7 +4,8 @@
     "use strict";
 
     const   mongoose        = require("mongoose"),
-            User            = require("./user");
+            User            = require("./user"),
+            possibleTypes   = [ 'legit', 'suspicious', 'scam'];
 
     const ValidatedSchema = new mongoose.Schema({
         domain: {
@@ -24,7 +25,7 @@
         },
         type: {
             type: String,
-            enum: [ 'legit', 'suspicious', 'scam'],
+            enum: possibleTypes,
             required: true,
             default: 0
         },
@@ -32,6 +33,10 @@
             type: String,
             default: ""
         }
+    });
+
+    ValidatedSchema.virtual('possibleTypes').get(() => {
+        return possibleTypes;
     });
 
     module.exports = mongoose.model("validated", ValidatedSchema);
